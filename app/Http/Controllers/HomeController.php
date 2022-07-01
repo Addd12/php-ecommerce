@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -19,7 +20,8 @@ class HomeController extends Controller
         }
         else
         {
-            return view('User.home');
+            $data = product::paginate(3);
+            return view('User.home', compact('data'));
         }
     }
 
@@ -31,7 +33,8 @@ class HomeController extends Controller
         }
         else
         {
-            return view('User.home');
+            $data = product::paginate(3);
+            return view('User.home', compact('data'));
         }
     }
 }
