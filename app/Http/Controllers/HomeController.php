@@ -37,4 +37,17 @@ class HomeController extends Controller
             return view('User.home', compact('data'));
         }
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        if($search=='')
+        {
+            $data = product::paginate(3);
+            return view('User.home', compact('data'));
+        }
+        $data=product::where('title', 'Like', '%' .$search.'%')->get();
+
+        return view('User.home', compact('data'));
+    }
 }
