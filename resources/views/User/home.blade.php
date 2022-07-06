@@ -83,6 +83,14 @@ https://templatemo.com/tm-546-sixteen-clothing
           </div>
         </div>
       </nav>
+      @if(session()->has('message'))
+        <div class="alert alert-success">
+          <button type="button" class="btn-close" data-bs-dismiss="alert">X</button>
+          
+          {{session()->get('message')}}
+        </div>
+      @endif
+
     </header>
 
     <!-- Page Content -->

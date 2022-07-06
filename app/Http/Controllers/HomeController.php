@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Cart;
+
 
 class HomeController extends Controller
 {
@@ -49,5 +51,28 @@ class HomeController extends Controller
         $data=product::where('title', 'Like', '%' .$search.'%')->get();
 
         return view('User.home', compact('data'));
+    }
+    public function addcart(Request $request, $id)
+    {
+        if(Auth::id())
+        {
+            $user = auth()->user(); #the logged in user's data will be stored in this variable 
+            $product=product::find($id);
+            $cart=new cart; 
+
+            $cart->name=$user->name;
+            $cart->phone=$user->phone;
+            $cart->address=$user->address;
+            $cart->product_title=$product->title;
+            $cart->price=$product->price;
+            $cart->quantity=$request->quantity;
+            $cart->save();
+
+            return redirect()->back()->with('message', 'Product added to cart successfully!');
+        }
+        else
+        {
+            return redirect('login');
+        }
     }
 }
